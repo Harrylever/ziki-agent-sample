@@ -1,6 +1,19 @@
 export type Kind = "plan" | "bid" | "merge";
 export type Outcome = "approved" | "declined" | "redirected";
-export interface Agent { id: string; name: string; on: boolean; base: string }
+export interface Agent {
+  id: string;
+  name: string;
+  kind: string;
+  on: boolean;
+  base: string;
+  seen: string;
+  about: string;
+  asks: string[];
+  week: number[];
+  approval: number;
+  can: string;
+  cannot: string;
+}
 export interface Request { id: string; kind: Kind; agent: string; when: string; issue: string; title: string; proposal: string; confidence: number; reason: string; outcome?: Outcome }
 export type Row = [label: string, text: string];
 export type Brief = Record<string, { plain: Row[]; tech: Row[] }>;
@@ -10,10 +23,25 @@ export const VERB: Record<Kind, string> = { plan: "proposes a plan", bid: "offer
 export const LABEL: Record<Kind, string> = { plan: "Plan", bid: "Bid", merge: "Merge" };
 
 export const agents: Agent[] = [
-    { id: "triager", name: "Bolu Triager", on: true, base: "Triaging the Web backlog" },
-    { id: "reviewer", name: "Bolu Reviewer", on: true, base: "Reviewing a pull request" },
-    { id: "claude", name: "Dean's Claude", on: false, base: "Last seen 5 days ago" }
-  ];
+  {
+    id: "triager", name: "Bolu Triager", kind: "Personal agent", on: true, base: "Triaging the Web backlog", seen: "Active 2m ago",
+    about: "Reads new issues, checks for duplicates and drafts a fix plan for you to approve.",
+    asks: ["plans"], week: [3, 5, 2, 6, 4, 8, 7], approval: 90,
+    can: "Read issues, comment and propose plans.", cannot: "Start work or merge without your approval.",
+  },
+  {
+    id: "reviewer", name: "Bolu Reviewer", kind: "Personal agent", on: true, base: "Reviewing a pull request", seen: "Active 14m ago",
+    about: "Independently verifies fixes and tells you when a pull request is ready to merge.",
+    asks: ["merges"], week: [1, 2, 4, 3, 5, 3, 6], approval: 100,
+    can: "Read pull requests, run checks and post verdicts.", cannot: "Merge without your approval.",
+  },
+  {
+    id: "claude", name: "Dean's Claude", kind: "Claude", on: false, base: "Last seen 5 days ago", seen: "Last seen 5 days ago",
+    about: "Takes on issues you hand it, bids on open work and delivers a pull request.",
+    asks: ["bids", "plans"], week: [6, 4, 0, 0, 0, 0, 0], approval: 75,
+    can: "Bid on issues and open pull requests.", cannot: "Take an issue or merge without your approval.",
+  },
+];
 
 export const initialRequests: Request[] = [
     { id: "r1", kind: "plan", agent: "triager", when: "2m ago", issue: "#44", title: "Buzz call participant count uses singular label for two people", proposal: "Pluralise the label in both Buzz call views and add widget tests. Estimate 30 minutes.", confidence: 95, reason: "Reproducible steps and a single component (buzz_meeting_view.dart:118). No duplicate in the catalog." },

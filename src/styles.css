@@ -114,7 +114,6 @@ dialog[open] { animation: pop .22s ease-out; }
 /* agents rail */
 .rail { padding-top: 6px; }
 .ag { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 0; background: none; border: 0; border-top: 1px solid var(--line); text-align: left; min-width: 0; }
-.ag:disabled { cursor: default; }
 .ag .pv { position: relative; flex: none; }
 .ag .av { width: 40px; height: 40px; border-radius: 13px; }
 .ag.off .av { background: var(--off); }
@@ -125,6 +124,23 @@ dialog[open] { animation: pop .22s ease-out; }
 .ag .t span { display: block; color: var(--muted); font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ag .t span.w { color: var(--accent); font-weight: 500; }
 .ag .n { background: var(--accent); color: var(--accent-ink); font-weight: 600; font-size: 12px; min-width: 22px; height: 22px; border-radius: 99px; display: grid; place-items: center; padding-inline: 6px; flex: none; }
+
+/* agent hover card */
+.ag-wrap { position: relative; }
+.pop { position: absolute; z-index: 30; width: 300px; right: calc(100% + 18px); top: -14px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; display: grid; gap: 14px; box-shadow: 0 14px 34px -18px rgba(11, 27, 58, .3); }
+.pop-head { display: flex; align-items: center; gap: 12px; }
+.pop-head b { display: block; font-weight: 600; }
+.pop-head span { color: var(--muted); font-size: 13px; }
+.pop p { margin: 0; font-size: 14.5px; }
+.pop-stats { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; padding-block: 12px; border-block: 1px solid var(--line); }
+.pop-stats dl { margin: 0; display: grid; gap: 8px; }
+.pop-stats dt { font-size: 12px; color: var(--muted); }
+.pop-stats dd { margin: 0; font-weight: 600; font-size: 14px; }
+.pop-spark { width: 108px; height: 34px; flex: none; overflow: visible; }
+.pop-can { display: grid; gap: 8px; font-size: 13.5px; color: var(--muted); }
+.pop-can b { color: var(--ink); font-weight: 600; }
+@media (max-width: 860px) { .pop { right: auto; left: 0; top: calc(100% + 6px); width: min(100%, 340px); } }
+.ag[aria-disabled="true"] { cursor: default; }
 
 /* trail */
 .trail { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 56px; }
