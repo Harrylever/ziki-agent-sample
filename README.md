@@ -27,20 +27,25 @@ Shortcuts pause while the breakdown dialog is open.
 
 ## Run it
 
-It is a single static file with no build step.
+Built with Vite, React, TypeScript and Framer Motion.
 
 ```bash
-open index.html
+npm install
+npm run dev      # local dev server
+npm run build    # type-check, then build to dist/
+npm run preview  # serve the production build
 ```
 
-Or serve the folder with any static server, for example `npx serve .`.
+## Motion
+
+Switching to the next decision is a short fade and 8 to 12px slide with a slight scale, so the card feels like it hands over to the next one. The "Up next" list reflows with the same restraint. Animations follow the system "reduce motion" setting.
 
 ## Deploy
 
-The page is served from the repo root. On Vercel, import this repo, set the framework preset to **Other**, leave the build command and output directory empty, and deploy. Every push to `main` redeploys.
+`vercel.json` tells Vercel to use the Vite framework and publish `dist/`, so no manual settings are needed. Import the repo on Vercel and every push to `main` redeploys.
 
 ## Notes
 
 - All agents, issues and decisions are sample data. Nothing is saved and no backend is called.
-- Plain HTML, CSS and JavaScript. The only external resource is the Inter and JetBrains Mono fonts from Google Fonts. The icons are inline SVG from [Hugeicons](https://hugeicons.com) (free set, MIT license).
+- The only external resource is the Inter and JetBrains Mono fonts from Google Fonts. Icons are inline SVG from [Hugeicons](https://hugeicons.com) (free set, MIT license).
 - Light by default, with a dark theme behind the theme toggle.
