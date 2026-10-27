@@ -27,13 +27,13 @@ Shortcuts pause while the breakdown dialog is open.
 
 ## Run it
 
-Built with Vite, React, TypeScript and Framer Motion.
+Built with Vite, React, TypeScript and Framer Motion. Uses [Bun](https://bun.sh) as the package manager.
 
 ```bash
-npm install
-npm run dev      # local dev server
-npm run build    # type-check, then build to dist/
-npm run preview  # serve the production build
+bun install
+bun run dev      # local dev server
+bun run build    # type-check, then build to dist/
+bun run preview  # serve the production build
 ```
 
 ## Motion
@@ -42,7 +42,7 @@ Switching to the next decision is a short fade and 8 to 12px slide with a slight
 
 ## Deploy
 
-`vercel.json` tells Vercel to use the Vite framework and publish `dist/`, so no manual settings are needed. Import the repo on Vercel and every push to `main` redeploys.
+`vercel.json` tells Vercel to use the Vite framework, install and build with Bun, and publish `dist/`, so no manual settings are needed. Import the repo on Vercel and every push to `main` redeploys.
 
 ## Notes
 
