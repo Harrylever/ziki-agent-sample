@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { BRIEF, LABEL, type Agent, type Outcome, type Request } from "../data";
 import { Icon } from "./Icon";
+
+const TABS = [["plain", "Plain"], ["tech", "Technical"]] as const;
 
 interface Props {
   request: Request | null;
@@ -39,17 +42,29 @@ export function BriefDialog({ request, agent, onClose, onDecide }: Props) {
           </div>
           <h2 id="dl-title">{request.title}</h2>
           <div className="seg" role="group" aria-label="Level of detail">
-            <button type="button" aria-pressed={mode === "plain"} onClick={() => setMode("plain")}>Plain</button>
-            <button type="button" aria-pressed={mode === "tech"} onClick={() => setMode("tech")}>Technical</button>
-          </div>
-          <dl className="brief">
-            {rows.map(([label, text]) => (
-              <div key={label}>
-                <dt>{label}</dt>
-                <dd>{text}</dd>
-              </div>
+            {TABS.map(([key, name]) => (
+              <button key={key} type="button" aria-pressed={mode === key} onClick={() => setMode(key)}>
+                {mode === key && <motion.span layoutId="seg-pill" className="seg-pill" transition={{ type: "spring", stiffness: 520, damping: 38 }} />}
+                <span className="seg-label">{name}</span>
+              </button>
             ))}
-          </dl>
+          </div>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.dl
+              key={mode}
+              className="brief"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 0.22, ease: [0.22, 1, 0.36, 1] } }}
+              exit={{ opacity: 0, y: -4, transition: { duration: 0.12 } }}
+            >
+              {rows.map(([label, text]) => (
+                <div key={label}>
+                  <dt>{label}</dt>
+                  <dd>{text}</dd>
+                </div>
+              ))}
+            </motion.dl>
+          </AnimatePresence>
           <div className="dl-foot">
             <button className="btn go" type="button" onClick={() => onDecide(request.id, "approved")}><Icon name="tick" />Approve</button>
             <button className="btn no" type="button" onClick={() => onDecide(request.id, "declined")}><Icon name="close" />Decline</button>
